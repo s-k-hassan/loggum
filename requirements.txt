@@ -1,0 +1,5 @@
+dotenv==0.9.9
+Faker==40.15.0
+python-dotenv==1.2.2
+PyYAML==6.0.3
+tzdata==2026.2

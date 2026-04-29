@@ -1,0 +1,75 @@
+version: 1
+disable_existing_loggers: False
+
+formatters:
+  baseformatter:
+    format: "[%(levelname)s] %(asctime)s %(message)s"
+    datefmt: "%Y-%m-%d %H:%M:%S %z"
+
+  formatterRFC5424:
+    format: "[%(levelname)s] <%(prival)s> %(asctime)s [%(servername)s] %(tag)s %(message)s"
+    datefmt: "%d-%b-%Y %H:%M:%S %z"
+
+  formatterCLF:
+    format: "[%(levelname)s] %(asctime)s [%(servername)s] %(message)s"
+    datefmt: "%m-%d-%Y %H:%M:%S %z"
+
+  formatterJSON:
+    "()": pythonjsonlogger.jsonlogger.JsonFormatter
+    format: "{levelname},{asctime}"
+    style: "{"
+    datefmt: "%d-%b-%Y %H:%M:%S %z"
+    rename_fields:
+      levelname: "severity"
+      asctime: "timestamp"
+      msg: "message"
+
+handlers:
+  handlerCLF:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: formatterCLF
+    stream: ext://sys.stdout
+
+  handlerRFC5424:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: formatterRFC5424
+    stream: ext://sys.stdout
+
+  handlerBaseformatter:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: baseformatter
+    stream: ext://sys.stdout
+
+  handlerJSON:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: formatterJSON
+    stream: ext://sys.stdout
+
+loggers:
+  loggerCLF:
+    level: DEBUG
+    handlers: [handlerCLF]
+    propagate: no
+
+  loggerRFC5424:
+    level: DEBUG
+    handlers: [handlerRFC5424]
+    propagate: no
+
+  loggerBaseformatter:
+    level: DEBUG
+    handlers: [handlerBaseformatter]
+    propagate: no
+
+  loggerJSON:
+    level: DEBUG
+    handlers: [handlerJSON]
+    propagate: no
+
+root:
+  level: WARNING
+  handlers: [handlerBaseformatter]
