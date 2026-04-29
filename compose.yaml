@@ -1,0 +1,15 @@
+services:
+  log-generator:
+    build: .
+    # environment:
+    #   # Number of log entries to generate. Use 0 for infinite generation. Default is 10
+    #   - LOG_COUNT = 10
+    #   # Server name displayed in the log entries. Default is "localhost".
+    #   - SERVER_NAME = localhost
+    #   # Log format to use for generation. Options: CLF, RFC5424, JSON, STOCKTX. Default is CLF.
+    #   - GENERATOR_FORMAT = CLF
+    #   # Time to wait between log entries in seconds (float). Default is 0 (no wait).
+    #   - MINIMUM_WAIT = 0
+    #   - MAXIMUM_WAIT = 0
+    #   # Timezone to use for timestamps in log entries. Default is UTC.
+    #   - TIMEZONE = UTC

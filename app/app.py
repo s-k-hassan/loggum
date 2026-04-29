@@ -6,22 +6,22 @@ import pythonjsonlogger
 
 # Load environment variables and validate them
 dotenv.load_dotenv()
-count = os.environ.get("LOG_COUNT", 1)
-servername = os.environ.get("SERVER_NAME", "localhost")
-generatorFormat = os.environ.get("GENERATOR_FORMAT", "CLF")
-minimumWait = os.environ.get("MINIMUM_WAIT", 0)
-maximumWait = os.environ.get("MAXIMUM_WAIT", 0)
+count = os.getenv("LOG_COUNT", 10)
+servername = os.getenv("SERVER_NAME", "localhost")
+generatorFormat = os.getenv("GENERATOR_FORMAT", "CLF")
+minimumWait = os.getenv("MINIMUM_WAIT", 0)
+maximumWait = os.getenv("MAXIMUM_WAIT", 0)
 
 # Validate environment variables
-assert minimumWait.replace(".", "").isdigit(), "MINIMUM_WAIT must be a numeric value"
-assert maximumWait.replace(".", "").isdigit(), "MAXIMUM_WAIT must be a numeric value"
+print(
+    f"Environment variables - SERVER_NAME: {servername}, GENERATOR_FORMAT: {generatorFormat}, MINIMUM_WAIT: {minimumWait}, MAXIMUM_WAIT: {maximumWait}, LOG_COUNT: {count}"
+)
 assert float(minimumWait) >= 0, "MINIMUM_WAIT must be a non-negative value"
 assert float(maximumWait) >= 0, "MAXIMUM_WAIT must be a non-negative value"
 assert float(maximumWait) >= float(
     minimumWait
 ), "MAXIMUM_WAIT must be greater than or equal to MINIMUM_WAIT"
-assert count.isdigit(), "LOG_COUNT must be an integer value"
-assert int(count) >= 0, "LOG_COUNT must be a non-negative integer"
+assert count >= 0, "LOG_COUNT must be a non-negative integer"
 assert generatorFormat in [
     "CLF",
     "RFC5424",
@@ -32,7 +32,7 @@ assert servername.isascii(), "SERVER_NAME must be an ASCII string"
 
 # Load logging configuration
 # config_file = 'logging_config.yaml'
-with open("app/logging_config.yaml", "r") as configFile:
+with open("./logging_config.yaml", "r") as configFile:
     config = yaml.safe_load(configFile.read())
     logging.config.dictConfig(config)
 
