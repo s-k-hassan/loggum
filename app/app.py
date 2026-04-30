@@ -17,6 +17,7 @@ servername = os.getenv("SERVER_NAME", "localhost")
 generatorFormat = os.getenv("GENERATOR_FORMAT", "CLF")
 minimumWait = os.getenv("MINIMUM_WAIT", 0)
 maximumWait = os.getenv("MAXIMUM_WAIT", 0)
+otelEndpoint = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", "none")
 
 # Validate environment variables
 print(
@@ -37,10 +38,11 @@ assert generatorFormat in [
 assert servername.isascii(), "SERVER_NAME must be an ASCII string"
 
 # Setup OTel logging provider
-logger_provider = LoggerProvider()
-set_logger_provider(logger_provider)
-exporter = OTLPLogExporter(endpoint="http://localhost:4317", insecure=True)
-logger_provider.add_log_record_processor(BatchLogRecordProcessor(exporter))
+if otelEndpoint != "none":
+    logger_provider = LoggerProvider()
+    set_logger_provider(logger_provider)
+    exporter = OTLPLogExporter(endpoint=otelEndpoint, insecure=True)
+    logger_provider.add_log_record_processor(BatchLogRecordProcessor(exporter))
 
 # Load logging configuration
 # config_file = 'logging_config.yaml'

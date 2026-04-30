@@ -1,6 +1,8 @@
 services:
   log-generator:
     build: .
+    container_name: loggum-generator
+    # Uncomment the following lines to set environment variables for the log generator
     # environment:
     #   # Number of log entries to generate. Use 0 for infinite generation. Default is 10
     #   - LOG_COUNT = 10
@@ -13,3 +15,5 @@ services:
     #   - MAXIMUM_WAIT = 0
     #   # Timezone to use for timestamps in log entries. Default is UTC.
     #   - TIMEZONE = UTC
+    #   # OpenTelemetry Collector endpoint for OTLP logs. Set to "none" to disable OTel logging. Default is "none".
+    #   - OTEL_EXPORTER_OTLP_ENDPOINT = none
