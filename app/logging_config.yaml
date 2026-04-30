@@ -31,11 +31,21 @@ handlers:
     formatter: formatterCLF
     stream: ext://sys.stdout
 
+  otelCLF:
+    class: opentelemetry.sdk._logs.LoggingHandler
+    level: DEBUG
+    formatter: formatterCLF
+
   handlerRFC5424:
     class: logging.StreamHandler
     level: DEBUG
     formatter: formatterRFC5424
     stream: ext://sys.stdout
+    
+  otelRFC5424:
+    class: opentelemetry.sdk._logs.LoggingHandler
+    level: DEBUG
+    formatter: formatterRFC5424
 
   handlerBaseformatter:
     class: logging.StreamHandler
@@ -49,15 +59,20 @@ handlers:
     formatter: formatterJSON
     stream: ext://sys.stdout
 
+  otelJSON:
+    class: opentelemetry.sdk._logs.LoggingHandler
+    level: DEBUG
+    formatter: formatterJSON
+
 loggers:
   loggerCLF:
     level: DEBUG
-    handlers: [handlerCLF]
+    handlers: [handlerCLF, otelCLF]
     propagate: no
 
   loggerRFC5424:
     level: DEBUG
-    handlers: [handlerRFC5424]
+    handlers: [handlerRFC5424, otelRFC5424]
     propagate: no
 
   loggerBaseformatter:
@@ -67,7 +82,7 @@ loggers:
 
   loggerJSON:
     level: DEBUG
-    handlers: [handlerJSON]
+    handlers: [handlerJSON, otelJSON]
     propagate: no
 
 root:
