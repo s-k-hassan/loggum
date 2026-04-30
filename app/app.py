@@ -4,6 +4,12 @@ import yaml, dotenv
 import logClasses
 import pythonjsonlogger
 
+# Import OTel logging libraries
+from opentelemetry._logs import set_logger_provider
+from opentelemetry.sdk._logs import LoggerProvider, LoggingHandler
+from opentelemetry.sdk._logs.export import BatchLogRecordProcessor
+from opentelemetry.exporter.otlp.proto.grpc._log_exporter import OTLPLogExporter
+
 # Load environment variables and validate them
 dotenv.load_dotenv()
 count = os.getenv("LOG_COUNT", 10)
@@ -29,6 +35,12 @@ assert generatorFormat in [
     "STOCKTX",
 ], "GENERATOR_FORMAT must be one of 'CLF', 'RFC5424', 'JSON', or 'STOCKTX'"
 assert servername.isascii(), "SERVER_NAME must be an ASCII string"
+
+# Setup OTel logging provider
+logger_provider = LoggerProvider()
+set_logger_provider(logger_provider)
+exporter = OTLPLogExporter(endpoint="http://localhost:4317", insecure=True)
+logger_provider.add_log_record_processor(BatchLogRecordProcessor(exporter))
 
 # Load logging configuration
 # config_file = 'logging_config.yaml'
