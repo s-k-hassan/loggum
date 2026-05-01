@@ -73,13 +73,9 @@ def logGenerator():
         case "JSON":
             createdLog = logClasses.JSON().generate_log_entry()
             logging.getLogger("loggerJSON").log(
-                msg=createdLog[0],
-                level=createdLog[1],
-                extra={
-                    "sourceip": createdLog[2],
-                    "username": createdLog[3],
-                    "servername": servername,
-                },
+                msg=createdLog,
+                level=createdLog["level"],
+                extra={"servername": servername},
             )
         case "STOCKTX":
             createdLog = logClasses.stockTX().generate_log_entry()

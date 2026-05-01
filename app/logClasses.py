@@ -62,7 +62,10 @@ class JSON:
         self.logLevel = random.choice([10, 20, 30, 40, 50])
 
     def generate_log_entry(self):
-        return self.logEntry, self.logLevel, self.ip, self.username
+        return json.loads(f"""
+        {{"msg": "{self.logEntry}", "level": {self.logLevel}, "sourceip": "{self.ip}",
+        "username": "{self.username}"}}
+        """)
 
 
 class stockTX:
