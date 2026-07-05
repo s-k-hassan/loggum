@@ -3,8 +3,6 @@ from pathlib import Path
 import time, random, os
 import yaml, dotenv
 import logClasses
-import pythonjsonlogger
-from pathlib import Path
 
 # Import OTel logging libraries
 from opentelemetry._logs import set_logger_provider
