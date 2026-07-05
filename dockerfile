@@ -1,10 +1,10 @@
 FROM python:3
 
-WORKDIR /app
+WORKDIR /loggum
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY /app/ .
+COPY /loggum/ .
 
 CMD [ "python", "app.py" ]
