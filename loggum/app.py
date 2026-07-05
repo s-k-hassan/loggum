@@ -31,7 +31,7 @@ assert float(maximumWait) >= 0, "MAXIMUM_WAIT must be a non-negative value"
 assert float(maximumWait) >= float(
     minimumWait
 ), "MAXIMUM_WAIT must be greater than or equal to MINIMUM_WAIT"
-assert count >= 0, "LOG_COUNT must be a non-negative integer"
+assert int(count) >= 0, "LOG_COUNT must be a non-negative integer"
 assert generatorFormat in [
     "CLF",
     "RFC5424",
