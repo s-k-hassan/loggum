@@ -1,14 +1,19 @@
 import logging, logging.config
+from pathlib import Path
 import time, random, os
 import yaml, dotenv
 import logClasses
 import pythonjsonlogger
+from pathlib import Path
 
 # Import OTel logging libraries
 from opentelemetry._logs import set_logger_provider
 from opentelemetry.sdk._logs import LoggerProvider, LoggingHandler
 from opentelemetry.sdk._logs.export import BatchLogRecordProcessor
 from opentelemetry.exporter.otlp.proto.grpc._log_exporter import OTLPLogExporter
+
+baseDir = Path(__file__).resolve().parent
+config_path = baseDir / "logging_config.yaml"
 
 # Load environment variables and validate them
 dotenv.load_dotenv()
@@ -46,7 +51,7 @@ if otelEndpoint != "none":
 
 # Load logging configuration
 # config_file = 'logging_config.yaml'
-with open("./logging_config.yaml", "r") as configFile:
+with open(config_path, "r") as configFile:
     config = yaml.safe_load(configFile.read())
     logging.config.dictConfig(config)
 
@@ -85,8 +90,7 @@ def logGenerator():
     if float(maximumWait) > 0:
         time.sleep(random.uniform(float(minimumWait), float(maximumWait)))
 
-
-if __name__ == "__main__":
+def startApp(count, servername, generatorFormat):
     logging.getLogger("loggerBaseformatter").info(
         f"Log generation started with format: {generatorFormat} and count: {count}"
     )
@@ -102,3 +106,7 @@ if __name__ == "__main__":
     else:
         while True:
             logGenerator()
+
+
+if __name__ == "__main__":
+    startApp(count, servername, generatorFormat)
